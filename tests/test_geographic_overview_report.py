@@ -1,4 +1,3 @@
-"""Tests for the `run_report` module."""
 import unittest
 
 from src.ganalytics.interfaces.iusecases import IReportUseCase
@@ -11,7 +10,8 @@ import os
 injector = configure()
 
 
-class PullReportsTestCase(unittest.TestCase):
+class GeographicOverviewReportTestCase(unittest.TestCase):
+    """Test case for the geographic overview report."""
 
     def setUp(self):
         # setup environment variables
@@ -20,23 +20,22 @@ class PullReportsTestCase(unittest.TestCase):
         # get the report usecase
         self.report_usecase = injector.get(IReportUseCase)
 
-    def test_traffic_overview(self):
-        # pull the traffic overview report
+    def test_geographic_overview(self):
+        # pull the geographic overview report
         report = self.report_usecase.pull_report(
-            report_name='traffic_overview',
+            report_name='geographic_overview',
             date_range={
                 'start_date': '2024-07-01',
                 'end_date': '2024-07-18'
             }
         )
-
         self.assertTrue(self.report_usecase.is_valid())
         self.assertIsNotNone(report)
 
-    def test_traffic_overview_with_invalid_date_range(self):
+    def test_geographic_overview_with_invalid_date_range(self):
         # pull the traffic overview report with invalid date range
         report = self.report_usecase.pull_report(
-            report_name='traffic_overview',
+            report_name='geographic_overview',
             date_range={
                 'start_date': '2024-07-18',
                 'end_date': '2024-07-01'
@@ -46,7 +45,7 @@ class PullReportsTestCase(unittest.TestCase):
         self.assertFalse(self.report_usecase.is_valid())
         self.assertIsNone(report)
 
-    def test_traffic_overview_with_invalid_report_name(self):
+    def test_geographic_overview_with_invalid_report_name(self):
         # pull the traffic overview report with invalid report name
         report = self.report_usecase.pull_report(
             report_name='invalid_report_name',
@@ -57,43 +56,6 @@ class PullReportsTestCase(unittest.TestCase):
         )
         self.assertFalse(self.report_usecase.is_valid())
         self.assertIsNone(report)
-
-    def test_top_pages(self):
-        # pull the top pages report
-        report = self.report_usecase.pull_report(
-            report_name='top_pages',
-            date_range={
-                'start_date': '2024-07-01',
-                'end_date': '2024-07-18'
-            }
-        )
-
-        self.assertTrue(self.report_usecase.is_valid())
-        self.assertIsNotNone(report)
-
-    def test_top_referrers(self):
-        # pull the top referrers report
-        report = self.report_usecase.pull_report(
-            report_name='top_referrers',
-            date_range={
-                'start_date': '2024-07-01',
-                'end_date': '2024-07-18'
-            }
-        )
-        self.assertTrue(self.report_usecase.is_valid())
-        self.assertIsNotNone(report)
-
-    def test_user_behaviour(self):
-        # pull the user behaviour report
-        report = self.report_usecase.pull_report(
-            report_name='users',
-            date_range={
-                'start_date': '2024-07-01',
-                'end_date': '2024-07-18'
-            }
-        )
-        self.assertTrue(self.report_usecase.is_valid())
-        self.assertIsNotNone(report)
 
 
 if __name__ == "__main__":

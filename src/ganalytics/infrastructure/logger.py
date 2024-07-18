@@ -37,7 +37,7 @@ class Logger(ILogger):
             "%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(module)s - %(lineno)d"
         )
         console_handler = logging.StreamHandler()
-        console_handler.setFormatter(verbose)
+        console_handler.setFormatter(simple)
         self.logger.addHandler(console_handler)
 
         # Add the context filter

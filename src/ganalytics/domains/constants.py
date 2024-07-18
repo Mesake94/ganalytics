@@ -29,6 +29,8 @@ class Metric(Enum):
     SESSIONS = 'sessions'
     SESSIONS_PER_USER = 'sessionsPerUser'
     USER_ENGAGEMENT_DURATION = 'userEngagementDuration'
+    AVERAGE_SESSION_DURATION = 'averageSessionDuration'
+    TOTAL_USERS = 'totalUsers'
 
 
 class Dimension(Enum):
@@ -38,6 +40,7 @@ class Dimension(Enum):
     """
     CITY = 'city'
     COUNTRY = 'country'
+    REGION = 'region'
     DEVICE_CATEGORY = 'deviceCategory'
     DEVICE_MODEL = 'deviceModel'
     MOBILE_DEVICE_MODEL = 'mobileDeviceModel'
@@ -56,4 +59,7 @@ class Dimension(Enum):
     OPERATING_SYSTEM = 'operatingSystem'
     OPERATING_SYSTEM_VERSION = 'operatingSystemVersion'
     PERCENT_SCROLLED = 'percentScrolled'
-
+    DATE = 'date'
+    SESSION_SOURCE = 'sessionSource'
+    SESSION_CAMPAIGN_ID = 'sessionCampaignId'
+    LANDING_PAGE = 'landingPage'

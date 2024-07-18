@@ -2,9 +2,11 @@ from src.ganalytics.interfaces.ianalytics import (
     IAnalyticsAPI
 )
 from src.ganalytics.interfaces.ilogger import ILogger
-from src.ganalytics.domains.constants import (
-    Metric as MetricEnum,
-    Dimension as DimensionEnum,
+from src.ganalytics.domains.analytics import (
+    MetricData,
+    DimensionData,
+    ReportRow,
+    GoogleAnalyticsReport,
 )
 from src.ganalytics.utils.validators import BaseAPI
 from src.ganalytics.utils.errors import (
@@ -60,8 +62,8 @@ class GoogleAnalyticsAPI(IAnalyticsAPI, BaseAPI):
             self.add_error(e)
             self.logger.error(e)
 
-    def get_report(self, start_date: str, end_date: str, metrics: list, dimensions: list) -> dict:
-        """Get report from the Google Analytics API
+    def get_report(self, start_date: str, end_date: str, metrics: list, dimensions: list) -> GoogleAnalyticsReport:
+        """Get report from the Google Analytics API.
         """
         response = None
         try:
@@ -74,8 +76,27 @@ class GoogleAnalyticsAPI(IAnalyticsAPI, BaseAPI):
             )
             # -- get the report
             response = self.client.run_report(request)
+            response = self._parse_response(response)
         except Exception as e:
             self.add_error(GoogleAnalyticsAPIError(f"Error getting report: {e}"))
             self.logger.error(f"Error getting report: {e}")
+
         return response
-        
+    
+    def _parse_response(self, response) -> GoogleAnalyticsReport:
+        """Parse the response from the Google Analytics API.
+        """
+        report = GoogleAnalyticsReport()
+        if response:
+            metric_headers = [metric.name for metric in response.metric_headers]
+            dimension_headers = [header.name for header in response.dimension_headers]
+            metrics = []
+            dimensions = []
+            for row in response.rows:
+                for metric_value, metric_header in zip(row.metric_values, metric_headers):
+                    metrics.append(MetricData(metric=metric_header, value=metric_value.value))
+                for dimension_value, dimension_header in zip(row.dimension_values, dimension_headers):
+                    dimensions.append(DimensionData(dimension=dimension_header, value=dimension_value.value))
+                report.add_row(ReportRow(metrics=metrics, dimensions=dimensions))
+        return report
+    

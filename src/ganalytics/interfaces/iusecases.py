@@ -23,3 +23,17 @@ class IReportTemplate(metaclass=ABCMeta):
         """Get the report template by name.
         """
         raise NotImplementedError
+    
+
+class ICompileReport(metaclass=ABCMeta):
+    """Interface for the compile report use case. This interface defines the methods
+    that the compile report use case should implement.
+    """
+
+    @abstractmethod
+    def compile_report(self, *args, **kwargs):
+        """Compile a report from the Google Analytics API.
+        """
+        raise NotImplementedError
+    
+

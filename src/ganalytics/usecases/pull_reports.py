@@ -60,9 +60,8 @@ class PullReport(IReportUseCase, BaseUseCase):
             dimensions=dimensions
         )
         if not self.analytics_api.is_valid():
-            self.extend_errors.extend(self.analytics_api.get_errors())
+            self.extend_errors(self.analytics_api.get_errors())
             return  # bail out if there are errors
 
         return report
-        
         
