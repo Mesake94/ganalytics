@@ -14,3 +14,7 @@ To install the library, run:
 ```bash
 pip install ganalytics
 
+```
+
+## Example
+Refer to quickstart.py for example usage.
