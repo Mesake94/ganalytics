@@ -2,7 +2,10 @@
 import logging
 from logging import LogRecord
 
+import coloredlogs
+
 from src.ganalytics.interfaces.ilogger import ILogger
+
 
 
 class ContextFilter(logging.Filter):
@@ -37,11 +40,13 @@ class Logger(ILogger):
             "%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(module)s - %(lineno)d"
         )
         console_handler = logging.StreamHandler()
-        console_handler.setFormatter(simple)
+        console_handler.setFormatter(verbose)
         self.logger.addHandler(console_handler)
 
         # Add the context filter
         self.logger.addFilter(ContextFilter())
+
+        coloredlogs.install(level="DEBUG", logger=self.logger)
 
     def info(self, message: str):
         """Log a message"""

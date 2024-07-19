@@ -63,3 +63,32 @@ class Dimension(Enum):
     SESSION_SOURCE = 'sessionSource'
     SESSION_CAMPAIGN_ID = 'sessionCampaignId'
     LANDING_PAGE = 'landingPage'
+
+
+class RealtimeMetric(Enum):
+    """Realtime Metric Enum for Google Analytics API
+    This enum contains the metrics that are available for the realtime report.
+
+    Note:
+        Refer to this link for more information: https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema
+    """
+    ACTIVE_USERS = 'activeUsers'
+    CONVERSIONS = 'conversions'
+    EVENT_COUNT = 'eventCount'
+    SCREEN_PAGE_VIEWS = 'screenPageViews'
+
+
+class RealtimeDimension(Enum):
+    """Realtime Dimension Enum for Google Analytics API
+    This enum contains the dimensions that are available for the realtime report.
+    """
+    CITY = 'city'
+    CITY_ID = 'cityId'
+    COUNTRY = 'country'
+    COUNTRY_ID = 'countryId'
+    DEVICE_CATEGORY = 'deviceCategory'
+    MINUTES_AGO = 'minutesAgo'  # The number of minutes ago that the data was collected. 00 - 59
+    PLATFORM = 'platform'
+    STREAM_ID = 'streamId'
+    STREAM_NAME = 'streamName'
+    UNIFIED_SCREEN_NAME = 'unifiedScreenName'

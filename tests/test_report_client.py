@@ -2,6 +2,10 @@ import unittest
 import os
 
 from src.ganalytics.client import ReportClient
+from src.ganalytics.domains.analytics import (
+    GoogleAnalyticsReport,
+    TableData
+)
 
 
 class ReportClientTestCase(unittest.TestCase):
@@ -14,17 +18,44 @@ class ReportClientTestCase(unittest.TestCase):
         # get the report usecase
         self.client = ReportClient()
 
-    def test_report_client(self):
+    def test_pull_report_snapshot(self):
         """Test the report client."""
         self.assertIsNotNone(self.client)
 
-        self.client.pull_report(
-            report_name='s',
+        report = self.client.pull_report_snapshot(
+            report_name='traffic_overview',
             date_range={
-                'start_date': '2024-01-01',
-                'end_date': '2023-08-31'
+                'start_date': '2024-07-01',
+                'end_date': '2024-07-20'
             }
         )
+
+        self.assertIsNotNone(report)
+        self.assertIsInstance(report, GoogleAnalyticsReport)
+
+    def test_convert_report(self):
+        """Test the report converter."""
+        report = self.client.pull_report_snapshot(
+            report_name='geographic_overview',
+            date_range={
+                'start_date': '2024-07-01',
+                'end_date': '2024-07-19'
+            }
+        )
+
+        table = self.client.convert_report(report)
+        self.assertIsNotNone(table)
+        self.assertIsInstance(table, TableData)
+        print(table)
+
+    def test_pull_report_realtime(self):
+        """Test the realtime report."""
+        report = self.client.pull_report_realtime(report_name='realtime_traffic_overview')
+    #     self.assertIsNotNone(report)
+    #     self.assertIsInstance(report, GoogleAnalyticsReport)
+
+    #     table = self.client.convert_report(report)
+    #     print(table)
 
 
 if __name__ == "__main__":

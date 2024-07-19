@@ -11,6 +11,12 @@ class IReportUseCase(metaclass=ABCMeta):
         """Pull a report from the Google Analytics API.
         """
         raise NotImplementedError
+    
+    @abstractmethod
+    def pull_realtime_report(self, report_name: str):
+        """Pull a real-time report from the Google Analytics API.
+        """
+        raise NotImplementedError
 
 
 class IReportTemplate(metaclass=ABCMeta):
@@ -23,17 +29,16 @@ class IReportTemplate(metaclass=ABCMeta):
         """Get the report template by name.
         """
         raise NotImplementedError
-    
 
-class ICompileReport(metaclass=ABCMeta):
-    """Interface for the compile report use case. This interface defines the methods
-    that the compile report use case should implement.
+
+class IReportConverter(metaclass=ABCMeta):
+    """Interface for the report converter. This interface defines the methods
+    that the report converter should implement.
     """
 
     @abstractmethod
-    def compile_report(self, *args, **kwargs):
-        """Compile a report from the Google Analytics API.
+    def convert_report(self, *args, **kwargs):
+        """Convert a report to a table-like structure.
         """
         raise NotImplementedError
     
-

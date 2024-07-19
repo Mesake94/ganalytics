@@ -31,13 +31,15 @@ class PullReport(IReportUseCase, BaseUseCase):
         self.logger = logger
 
     def pull_report(self, report_name: str, date_range: dict):
-        """Pull a report from the Google Analytics API.
+        """Pull a report snapshot from the Google Analytics API.
         """
         # -- validate the date range
         try:
             date_range = DateRange(**date_range)
         except ValueError as e:
             self.add_error(ReportParamsError(str(e)))
+            # log the error
+            self.logger.error(str(e))
             return
         
         # -- get the report template
@@ -53,7 +55,7 @@ class PullReport(IReportUseCase, BaseUseCase):
         end_date = date_range.end_date
         
         # call the analytics api to get the report
-        report = self.analytics_api.get_report(
+        report = self.analytics_api.run_report(
             start_date=start_date.strftime('%Y-%m-%d'),  # convert date to string
             end_date=end_date.strftime('%Y-%m-%d'),  # convert date to string
             metrics=metrics,
@@ -64,4 +66,27 @@ class PullReport(IReportUseCase, BaseUseCase):
             return  # bail out if there are errors
 
         return report
+    
+    def pull_realtime_report(self, report_name: str):
+        """Pull a realtime report snapshot from the Google Analytics API.
+        """
+        # -- get the report template
+        template = self.report_template.get_template(report_name)
+        if not self.report_template.is_valid():
+            self.extend_errors(self.report_template.get_errors())
+            return
         
+        #  extract the metrics and dimensions from the template
+        metrics = template.get('metrics')
+        dimensions = template.get('dimensions')
+        
+        # call the analytics api to get the report
+        report = self.analytics_api.run_realtime_report(
+            metrics=metrics,
+            dimensions=dimensions
+        )
+        if not self.analytics_api.is_valid():
+            self.extend_errors(self.analytics_api.get_errors())
+            return  # bail out if there are errors
+
+        return report

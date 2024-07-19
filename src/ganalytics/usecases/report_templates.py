@@ -3,7 +3,7 @@ Note:
     Refer to this link https://calibrate-analytics.com/insights/2023/07/24/The-Top-API-Metric-and-Dimension-Combos-for-Google-Analytics-4/
     for a list of the top API metric and dimension combos for standard Google Analytics 4 reports.
 """
-from src.ganalytics.domains.constants import Metric, Dimension
+from src.ganalytics.domains.constants import Metric, Dimension, RealtimeMetric, RealtimeDimension
 from src.ganalytics.utils.errors import ReportNotFoundError, ReportParamsError
 from src.ganalytics.interfaces.ilogger import ILogger
 from src.ganalytics.utils.validators import BaseUseCase
@@ -44,6 +44,17 @@ class ReportTemplates(IReportTemplate, BaseUseCase):
                 Dimension.SESSION_CAMPAIGN_ID.value,
                 Dimension.DEVICE_CATEGORY.value,
             ],
+        }
+    
+    @staticmethod
+    def realtime_traffic_overview() -> dict:
+        return {
+            'metrics': [
+                RealtimeMetric.ACTIVE_USERS.value,
+            ],
+            'dimensions': [
+                RealtimeDimension.CITY.value,
+            ]
         }
     
     @staticmethod
@@ -153,8 +164,4 @@ class ReportTemplates(IReportTemplate, BaseUseCase):
         except AttributeError:
             self.add_error(ReportNotFoundError(f'Report template `{report_name}` not found'))
             self.logger.error(f"Report template `{report_name}` not found")
-            return None
-        except Exception as e:
-            self.add_error(e)
-            self.logger.error(e)
             return None

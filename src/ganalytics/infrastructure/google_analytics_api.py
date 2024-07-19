@@ -20,6 +20,8 @@ from google.analytics.data_v1beta.types import (
     Metric,
     Dimension,
     RunReportRequest,
+    RunRealtimeReportRequest,
+    RunPivotReportRequest,
 )
 
 import os
@@ -33,8 +35,8 @@ class GoogleAnalyticsAPI(IAnalyticsAPI, BaseAPI):
     @inject
     def __init__(self, logger: ILogger):
         """Initialize the Google Analytics API"""
-        self.logger = logger
         super(BaseAPI, self).__init__()
+        self.logger = logger
         self.__post_init__()
 
     def check_env_vars(self, env_vars: list):
@@ -62,8 +64,9 @@ class GoogleAnalyticsAPI(IAnalyticsAPI, BaseAPI):
             self.add_error(e)
             self.logger.error(e)
 
-    def get_report(self, start_date: str, end_date: str, metrics: list, dimensions: list) -> GoogleAnalyticsReport:
-        """Get report from the Google Analytics API.
+    def run_report(self, start_date: str, end_date: str, metrics: list, dimensions: list) -> GoogleAnalyticsReport:
+        """Request a report from the Google Analytics API. This report is not in real-time.
+        It contains statistics derived from the data collected over a period of time.
         """
         response = None
         try:
@@ -83,6 +86,27 @@ class GoogleAnalyticsAPI(IAnalyticsAPI, BaseAPI):
 
         return response
     
+    def run_realtime_report(self, metrics: list, dimensions: list) -> GoogleAnalyticsReport:
+        """Request a real-time report from the Google Analytics API. This report contains
+        real-time statistics about the data collected.
+        """
+        response = None
+        try:
+            # -- create a request
+            request = RunRealtimeReportRequest(
+                property=f"properties/{os.getenv('GA_PROPERTY_ID')}",
+                dimensions=[Dimension(name=dimension) for dimension in dimensions],
+                metrics=[Metric(name=metric) for metric in metrics],
+            )
+            # -- get the report
+            response = self.client.run_report(request)
+            response = self._parse_response(response)
+        except Exception as e:
+            self.add_error(GoogleAnalyticsAPIError(f"Error getting real-time report: {e}"))
+            self.logger.error(f"Error getting real-time report: {e}")
+
+        return response
+    
     def _parse_response(self, response) -> GoogleAnalyticsReport:
         """Parse the response from the Google Analytics API.
         """
@@ -99,4 +123,3 @@ class GoogleAnalyticsAPI(IAnalyticsAPI, BaseAPI):
                     dimensions.append(DimensionData(dimension=dimension_header, value=dimension_value.value))
                 report.add_row(ReportRow(metrics=metrics, dimensions=dimensions))
         return report
-    

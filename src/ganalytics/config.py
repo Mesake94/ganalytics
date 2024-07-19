@@ -2,11 +2,12 @@
 from injector import Injector, singleton
 
 from src.ganalytics.interfaces.ianalytics import IAnalyticsAPI
-from src.ganalytics.interfaces.iusecases import IReportUseCase, IReportTemplate
+from src.ganalytics.interfaces.iusecases import IReportUseCase, IReportTemplate, IReportConverter
 from src.ganalytics.interfaces.ilogger import ILogger
 
 from src.ganalytics.usecases.pull_reports import PullReport
 from src.ganalytics.usecases.report_templates import ReportTemplates
+from src.ganalytics.usecases.converter import ReportConverter
 from src.ganalytics.infrastructure.google_analytics_api import GoogleAnalyticsAPI
 from src.ganalytics.infrastructure.logger import Logger
 
@@ -18,4 +19,5 @@ def configure():
     injector.binder.bind(IReportUseCase, to=PullReport, scope=singleton)
     injector.binder.bind(ILogger, to=Logger, scope=singleton)
     injector.binder.bind(IReportTemplate, to=ReportTemplates, scope=singleton)
+    injector.binder.bind(IReportConverter, to=ReportConverter, scope=singleton)
     return injector
