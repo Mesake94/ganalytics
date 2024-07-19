@@ -30,6 +30,11 @@ class PullReport(IReportUseCase, BaseUseCase):
         self.report_template = report_template
         self.logger = logger
 
+    def list_reports(self) -> List[str]:
+        """List the available reports.
+        """
+        return self.report_template.list_templates()
+
     def pull_report(self, report_name: str, date_range: dict):
         """Pull a report snapshot from the Google Analytics API.
         """

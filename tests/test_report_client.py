@@ -47,5 +47,13 @@ class ReportClientTestCase(unittest.TestCase):
         self.assertIsNotNone(table)
         self.assertIsInstance(table, TableData)
 
+    def test_list_reports(self):
+        """Test the list reports method."""
+        reports = self.client.list_reports()
+        self.assertIsNotNone(reports)
+        self.assertIsInstance(reports, list)
+        self.assertTrue(len(reports) > 0)
+        print(reports)
+
 if __name__ == "__main__":
     unittest.main()

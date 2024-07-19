@@ -32,3 +32,8 @@ class ReportClient:
         """Convert a report to a table-like structure.
         """
         return self.converterModule.convert_report(report)
+    
+    def list_reports(self):
+        """List the available reports.
+        """
+        return self.reportModule.list_reports()

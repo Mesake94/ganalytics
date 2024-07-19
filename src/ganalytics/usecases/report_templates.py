@@ -7,15 +7,25 @@ from src.ganalytics.domains.constants import Metric, Dimension, RealtimeMetric, 
 from src.ganalytics.utils.errors import ReportNotFoundError, ReportParamsError
 from src.ganalytics.interfaces.ilogger import ILogger
 from src.ganalytics.utils.validators import BaseUseCase
+from src.ganalytics.utils.decorators import is_template
 
 from src.ganalytics.interfaces.iusecases import IReportTemplate
 from src.ganalytics.interfaces.ilogger import ILogger
 
+from typing import List
+
 from injector import inject
+
+import inspect
 
 
 class ReportTemplates(IReportTemplate, BaseUseCase):
-    """Report templates for Google Analytics reports."""
+    """Report templates for Google Analytics reports.
+    
+    Note:
+        Only static methods are used to define the report templates. Do not add
+        any static methods that are not report templates.
+    """
 
     @inject
     def __init__(self, logger: ILogger):
@@ -24,7 +34,7 @@ class ReportTemplates(IReportTemplate, BaseUseCase):
         self.logger = logger
 
     @staticmethod
-    def traffic_overview() -> dict:
+    def traffic_overview(*args, **kwargs) -> dict:
         """
         This report provides an overview of the traffic on the website. It
         includes the number of active users, sessions, etc. The report is
@@ -181,3 +191,11 @@ class ReportTemplates(IReportTemplate, BaseUseCase):
             self.add_error(ReportNotFoundError(f'Report template `{report_name}` not found'))
             self.logger.error(f"Report template `{report_name}` not found")
             return None
+
+    def list_templates(self) -> List[str]:
+        """This method is used to list all the available report templates."""
+        actual_templates = []
+        # static methods correspond to the report templates
+        for name, method in inspect.getmembers(self, predicate=inspect.isfunction):  # use is function for static methods, method for instance methods
+            actual_templates.append(name)
+        return actual_templates

@@ -26,3 +26,8 @@ data = table.data
 
 print("Columns: ", columns, "\n")
 print("Data: ", data)
+
+
+# to list the available reports
+report_names = client.list_reports()
+print(report_names)
