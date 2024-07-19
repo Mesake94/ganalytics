@@ -146,6 +146,22 @@ class ReportTemplates(IReportTemplate, BaseUseCase):
             'dimensions': [Dimension.PAGE_PATH.value],
         }
     
+    @staticmethod
+    def user_acquisition() -> dict:
+        """User acquisition report template."""
+        return {
+            'metrics': [
+                Metric.NEW_USERS.value,
+                Metric.TOTAL_USERS.value,
+                Metric.SESSIONS.value,
+                Metric.ENGAGED_SESSIONS.value,
+                ],
+            'dimensions': [
+                Dimension.DATE.value,
+                Dimension.SESSION_SOURCE.value,
+            ],
+        }
+    
     def get_template(self, report_name: str):
         """This method is used to get the report template by name.
 
