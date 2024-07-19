@@ -4,18 +4,19 @@ from src.ganalytics.interfaces.iusecases import (
     IReportUseCase,
     IReportConverter
 )
+from src.ganalytics.utils.validators import BaseUseCase
 
-
-injector = configure()
+from typing import Any
 
 
 class ReportClient:
 
-    def __init__(self):
+    def __init__(self, custom_config: Any = None):
         """Initialize the ReportClient class.
         This class will pull reports from the Google Analytics API
         using the ReportUseCase class.
         """
+        injector = configure(additional_configurations=custom_config)
         self.reportModule = injector.get(IReportUseCase)
         self.converterModule = injector.get(IReportConverter)
 

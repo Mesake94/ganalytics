@@ -1,5 +1,5 @@
 """Injector configuration to bind the test classes to their implementations."""
-from injector import Injector, singleton
+from injector import Injector, singleton, Binder
 
 from src.ganalytics.interfaces.ianalytics import IAnalyticsAPI
 from src.ganalytics.interfaces.iusecases import IReportUseCase, IReportTemplate, IReportConverter
@@ -12,12 +12,21 @@ from src.ganalytics.infrastructure.google_analytics_api import GoogleAnalyticsAP
 from src.ganalytics.infrastructure.logger import Logger
 
 
-def configure():
-    """Configure the injector"""
+def configure(additional_configurations: list = None):
+    """Configure the injector with optional additional configurations"""
+
     injector = Injector()
-    injector.binder.bind(IAnalyticsAPI, to=GoogleAnalyticsAPI, scope=singleton)
-    injector.binder.bind(IReportUseCase, to=PullReport, scope=singleton)
-    injector.binder.bind(ILogger, to=Logger, scope=singleton)
-    injector.binder.bind(IReportTemplate, to=ReportTemplates, scope=singleton)
-    injector.binder.bind(IReportConverter, to=ReportConverter, scope=singleton)
+
+    def default_configuration(binder: Binder):
+        binder.bind(IAnalyticsAPI, to=GoogleAnalyticsAPI, scope=singleton)
+        binder.bind(IReportUseCase, to=PullReport, scope=singleton)
+        binder.bind(ILogger, to=Logger, scope=singleton)
+        binder.bind(IReportTemplate, to=ReportTemplates, scope=singleton)
+        binder.bind(IReportConverter, to=ReportConverter, scope=singleton)
+    
+    injector.binder.install(default_configuration)
+    if additional_configurations:
+        for config in additional_configurations:
+            injector.binder.install(config)
+    
     return injector

@@ -33,6 +33,8 @@ from src.ganalytics.utils.validators import (
     BaseRepository,
     BaseAPI,
 )
+from src.ganalytics.config import configure
+from src.ganalytics.client import ReportClient
 
 
 __all__ = [
@@ -60,7 +62,10 @@ __all__ = [
     "BaseUseCase",
     "BaseRepository",
     "BaseAPI",
+    "configure",
+    "ReportClient"
 ]
 
 
 __version__ = "0.0.1"
+

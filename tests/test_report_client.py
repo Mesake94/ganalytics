@@ -46,17 +46,6 @@ class ReportClientTestCase(unittest.TestCase):
         table = self.client.convert_report(report)
         self.assertIsNotNone(table)
         self.assertIsInstance(table, TableData)
-        print(table)
-
-    def test_pull_report_realtime(self):
-        """Test the realtime report."""
-        report = self.client.pull_report_realtime(report_name='realtime_traffic_overview')
-    #     self.assertIsNotNone(report)
-    #     self.assertIsInstance(report, GoogleAnalyticsReport)
-
-    #     table = self.client.convert_report(report)
-    #     print(table)
-
 
 if __name__ == "__main__":
     unittest.main()

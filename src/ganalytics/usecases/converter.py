@@ -22,7 +22,6 @@ class ReportConverter(IReportConverter, BaseUseCase):
 
     def convert_report(self, report: GoogleAnalyticsReport) -> TableData:
         """Convert a report to a table-like structure"""
-        self.logger.info('Converting report to table-like structure')
         table = TableData(columns=[], data=[])
         # -- extract the columns from the report
         for row in report.rows:
@@ -44,3 +43,6 @@ class ReportConverter(IReportConverter, BaseUseCase):
 
         return table
 
+
+class ReportExporter(BaseUseCase):
+    pass
