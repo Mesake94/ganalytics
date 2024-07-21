@@ -1,10 +1,10 @@
 """Entry point for the Google Analytics client."""
-from src.ganalytics.config import configure
-from src.ganalytics.interfaces.iusecases import (
+from .config import configure
+from .interfaces.iusecases import (
     IReportUseCase,
     IReportConverter
 )
-from src.ganalytics.utils.validators import BaseUseCase
+from .utils.validators import BaseUseCase
 
 from typing import Any
 

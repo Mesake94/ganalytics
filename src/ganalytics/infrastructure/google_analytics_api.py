@@ -1,15 +1,15 @@
-from src.ganalytics.interfaces.ianalytics import (
+from ..interfaces.ianalytics import (
     IAnalyticsAPI
 )
-from src.ganalytics.interfaces.ilogger import ILogger
-from src.ganalytics.domains.analytics import (
+from ..interfaces.ilogger import ILogger
+from ..domains.analytics import (
     MetricData,
     DimensionData,
     ReportRow,
     GoogleAnalyticsReport,
 )
-from src.ganalytics.utils.validators import BaseAPI
-from src.ganalytics.utils.errors import (
+from ..utils.validators import BaseAPI
+from ..utils.errors import (
     EnvironmentVariableError,
     GoogleAnalyticsAPIError,
 )

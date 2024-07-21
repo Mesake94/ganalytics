@@ -1,8 +1,8 @@
 import unittest
 import os
 
-from src.ganalytics.client import ReportClient
-from src.ganalytics.domains.analytics import (
+from ganalytics.client import ReportClient
+from ganalytics.domains.analytics import (
     GoogleAnalyticsReport,
     TableData
 )

@@ -2,7 +2,7 @@
 Base classes for usecases and external services.
 It adds abstraction to handle exceptions and errors.
 """
-from src.ganalytics.utils.errors import AppError
+from ganalytics.utils.errors import AppError
 
 
 class BaseValidator:

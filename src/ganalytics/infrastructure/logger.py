@@ -4,8 +4,7 @@ from logging import LogRecord
 
 import coloredlogs
 
-from src.ganalytics.interfaces.ilogger import ILogger
-
+from ..interfaces.ilogger import ILogger
 
 
 class ContextFilter(logging.Filter):

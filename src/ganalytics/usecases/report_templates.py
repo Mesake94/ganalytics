@@ -3,14 +3,14 @@ Note:
     Refer to this link https://calibrate-analytics.com/insights/2023/07/24/The-Top-API-Metric-and-Dimension-Combos-for-Google-Analytics-4/
     for a list of the top API metric and dimension combos for standard Google Analytics 4 reports.
 """
-from src.ganalytics.domains.constants import Metric, Dimension, RealtimeMetric, RealtimeDimension
-from src.ganalytics.utils.errors import ReportNotFoundError, ReportParamsError
-from src.ganalytics.interfaces.ilogger import ILogger
-from src.ganalytics.utils.validators import BaseUseCase
-from src.ganalytics.utils.decorators import is_template
+from ..domains.constants import Metric, Dimension, RealtimeMetric, RealtimeDimension
+from ..utils.errors import ReportNotFoundError, ReportParamsError
+from ..interfaces.ilogger import ILogger
+from ..utils.validators import BaseUseCase
+from ..utils.decorators import is_template
 
-from src.ganalytics.interfaces.iusecases import IReportTemplate
-from src.ganalytics.interfaces.ilogger import ILogger
+from ..interfaces.iusecases import IReportTemplate
+from ..interfaces.ilogger import ILogger
 
 from typing import List
 
@@ -179,11 +179,6 @@ class ReportTemplates(IReportTemplate, BaseUseCase):
             report_name (str): The name of the report template to get.
         Returns:
             dict: The report template
-        Examples:
-            >>> report_templates = ReportTemplates()
-            >>> report_templates.get_template('traffic_overview')
-            {'metrics': ['ga:activeUsers', 'ga:sessions'], 'dimensions': ['city']}
-        
         """
         try:
             return getattr(self, report_name)()

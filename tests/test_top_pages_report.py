@@ -1,6 +1,6 @@
 import unittest
 
-from src.ganalytics.interfaces.iusecases import IReportUseCase
+from ganalytics.interfaces.iusecases import IReportUseCase
 from tests.config import configure
 
 import os

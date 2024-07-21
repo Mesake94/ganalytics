@@ -1,7 +1,7 @@
 import unittest
 
-from src.ganalytics.interfaces.iusecases import IReportUseCase
-from src.ganalytics.domains.constants import Metric, Dimension
+from ganalytics.interfaces.iusecases import IReportUseCase
+from ganalytics.domains.constants import Metric, Dimension
 
 from tests.config import configure
 

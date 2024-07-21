@@ -1,18 +1,18 @@
 """Implementation of the usecases for the analytics module."""
-from src.ganalytics.interfaces.iusecases import (
+from ..interfaces.iusecases import (
     IReportUseCase,
     IReportTemplate,
 )
-from src.ganalytics.interfaces.ianalytics import IAnalyticsAPI
-from src.ganalytics.interfaces.ilogger import ILogger
-from src.ganalytics.utils.validators import (
+from ..interfaces.ianalytics import IAnalyticsAPI
+from ..interfaces.ilogger import ILogger
+from ..utils.validators import (
     BaseUseCase,
 )
-from src.ganalytics.utils.errors import (
+from ..utils.errors import (
     ReportNotFoundError,
     ReportParamsError,
 )
-from src.ganalytics.domains.analytics import DateRange
+from ..domains.analytics import DateRange
 
 from typing import List
 

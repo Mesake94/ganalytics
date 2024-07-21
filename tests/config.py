@@ -1,15 +1,15 @@
 """Injector configuration to bind the test classes to their implementations."""
 from injector import Injector, singleton
 
-from src.ganalytics.interfaces.ianalytics import IAnalyticsAPI
-from src.ganalytics.interfaces.iusecases import IReportUseCase, IReportTemplate, IReportConverter
-from src.ganalytics.interfaces.ilogger import ILogger
+from ganalytics.interfaces.ianalytics import IAnalyticsAPI
+from ganalytics.interfaces.iusecases import IReportUseCase, IReportTemplate, IReportConverter
+from ganalytics.interfaces.ilogger import ILogger
 
-from src.ganalytics.usecases.pull_reports import PullReport
-from src.ganalytics.usecases.report_templates import ReportTemplates
-from src.ganalytics.usecases.converter import ReportConverter
-from src.ganalytics.infrastructure.google_analytics_api import GoogleAnalyticsAPI
-from src.ganalytics.infrastructure.logger import Logger
+from ganalytics.usecases.pull_reports import PullReport
+from ganalytics.usecases.report_templates import ReportTemplates
+from ganalytics.usecases.converter import ReportConverter
+from ganalytics.infrastructure.google_analytics_api import GoogleAnalyticsAPI
+from ganalytics.infrastructure.logger import Logger
 
 from tests.mocks import *
 

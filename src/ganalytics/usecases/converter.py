@@ -4,10 +4,10 @@ that converts a report to a table-like structure.
 """
 from typing import List, Dict, Any
 
-from src.ganalytics.interfaces.iusecases import IReportConverter
-from src.ganalytics.domains.analytics import GoogleAnalyticsReport, TableData
-from src.ganalytics.interfaces.ilogger import ILogger
-from src.ganalytics.utils.validators import BaseUseCase
+from ..interfaces.iusecases import IReportConverter
+from ..domains.analytics import GoogleAnalyticsReport, TableData
+from ..interfaces.ilogger import ILogger
+from ..utils.validators import BaseUseCase
 
 from injector import inject
 

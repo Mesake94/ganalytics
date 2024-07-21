@@ -1,4 +1,4 @@
-from src.ganalytics.domains.analytics import (
+from .domains.analytics import (
     DateRange,
     MetricData,
     DimensionData,
@@ -6,35 +6,35 @@ from src.ganalytics.domains.analytics import (
     GoogleAnalyticsReport,
 )
 
-from src.ganalytics.infrastructure.google_analytics_api import GoogleAnalyticsAPI
-from src.ganalytics.infrastructure.logger import Logger
-from src.ganalytics.interfaces.ianalytics import (
+from .infrastructure.google_analytics_api import GoogleAnalyticsAPI
+from .infrastructure.logger import Logger
+from .interfaces.ianalytics import (
     IAnalyticsAPI,
 )
-from src.ganalytics.interfaces.ilogger import ILogger
-from src.ganalytics.interfaces.iusecases import (
+from .interfaces.ilogger import ILogger
+from .interfaces.iusecases import (
     IReportUseCase,
     IReportTemplate,
     IReportConverter,
 )
-from src.ganalytics.usecases.converter import ReportConverter
-from src.ganalytics.usecases.pull_reports import PullReport
-from src.ganalytics.usecases.report_templates import ReportTemplates
-from src.ganalytics.utils.errors import (
+from .usecases.converter import ReportConverter
+from .usecases.pull_reports import PullReport
+from .usecases.report_templates import ReportTemplates
+from .utils.errors import (
     AppError,
     EnvironmentVariableError,
     GoogleAnalyticsAPIError,
     ReportNotFoundError,
     ReportParamsError,
 )
-from src.ganalytics.utils.validators import (
+from .utils.validators import (
     BaseValidator,
     BaseUseCase,
     BaseRepository,
     BaseAPI,
 )
-from src.ganalytics.config import configure
-from src.ganalytics.client import ReportClient
+from .config import configure
+from .client import ReportClient
 
 
 __all__ = [
